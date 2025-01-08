@@ -24,7 +24,7 @@ class _MissionDetailsViewState extends State<MissionDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mission details'),
+        title: const Text('Mission details',textAlign: TextAlign.center),
       ),
       body: FutureBuilder<Mission>(
         future: _missionDetails,

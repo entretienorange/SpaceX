@@ -13,7 +13,8 @@ class MissionView extends StatelessWidget {
       create: (_) => MissionViewModel()..fetchMissions(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('list of Mission'),
+          title: const Text('List of Missions'),
+          centerTitle: true, // Centrer le titre
         ),
         drawer: SideMenu(),  
         body: Consumer<MissionViewModel>(
@@ -21,27 +22,72 @@ class MissionView extends StatelessWidget {
             if (viewModel.isLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (viewModel.missions.isEmpty) {
-              return const Center(child: Text('Aucun lancement disponible.'));
+              return const Center(child: Text('No missions available.'));
             } else {
-              return ListView.builder(
-                itemCount: viewModel.missions.length,
-                itemBuilder: (context, index) {
-                  final mission = viewModel.missions[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: ListTile(
-                      title: Text(mission.missionName),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MissionDetailsView(
-                              missionId: mission.missionId, 
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  double cardWidth = constraints.maxWidth > 600 ? 400 : constraints.maxWidth * 0.9;
+                  double fontSize = constraints.maxWidth > 600 ? 22 : 16;
+
+                  return ListView.builder(
+                    itemCount: viewModel.missions.length,
+                    itemBuilder: (context, index) {
+                      final mission = viewModel.missions[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigation vers les détails de la mission
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MissionDetailsView(
+                                  missionId: mission.missionId,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            elevation: 4.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: cardWidth, // Largeur responsive de la carte
+                                    child: Text(
+                                      mission.missionName,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: fontSize, // Taille de texte responsive
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  SizedBox(
+                                    width: cardWidth,
+                                    child: Text(
+                                      'ID: ${mission.missionId}', // Exemple d'ajout d'information supplémentaire
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: fontSize - 2,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   );
                 },
               );

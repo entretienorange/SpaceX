@@ -14,7 +14,7 @@ class MissionView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('List of Missions'),
-          centerTitle: true, // Centrer le titre
+          centerTitle: true, 
         ),
         drawer: SideMenu(),  
         body: Consumer<MissionViewModel>(
@@ -37,7 +37,6 @@ class MissionView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Navigation vers les détails de la mission
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -59,12 +58,12 @@ class MissionView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    width: cardWidth, // Largeur responsive de la carte
+                                    width: cardWidth, 
                                     child: Text(
                                       mission.missionName,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: fontSize, // Taille de texte responsive
+                                        fontSize: fontSize, 
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -73,7 +72,7 @@ class MissionView extends StatelessWidget {
                                   SizedBox(
                                     width: cardWidth,
                                     child: Text(
-                                      'ID: ${mission.missionId}', // Exemple d'ajout d'information supplémentaire
+                                      'ID: ${mission.missionId}', 
                                       style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: fontSize - 2,

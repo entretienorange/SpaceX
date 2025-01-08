@@ -12,7 +12,8 @@ class LaunchDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Launch details'),
+        centerTitle: true, 
+        title: const Text('Launch Details'),
       ),
       body: FutureBuilder<Launch>(
         future: Provider.of<LaunchViewModel>(context, listen: false)
@@ -28,26 +29,66 @@ class LaunchDetailsView extends StatelessWidget {
 
           final launch = snapshot.data!;
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  launch.name,
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Date de lancement: ${launch.date}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Détails: ${launch.details}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0), 
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center, 
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5.0), 
+                    child: Text(
+                      launch.name,
+                      textAlign: TextAlign.center, 
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0), 
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Date de lancement: ',
+                            style: TextStyle(
+                              color: Colors.red, 
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          TextSpan(
+                            text: launch.date,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0), 
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Détails: ',
+                            style: TextStyle(
+                              color: Colors.red, 
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          TextSpan(
+                            text: launch.details,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },

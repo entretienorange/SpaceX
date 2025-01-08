@@ -24,7 +24,8 @@ class _MissionDetailsViewState extends State<MissionDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mission details',textAlign: TextAlign.center),
+        centerTitle: true,
+        title: const Text('Mission Details'),
       ),
       body: FutureBuilder<Mission>(
         future: _missionDetails,
@@ -35,26 +36,52 @@ class _MissionDetailsViewState extends State<MissionDetailsView> {
             return Center(child: Text('Erreur: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             final mission = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    mission.missionName,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'ID Mission: ${mission.missionId}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    mission.description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0), 
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center, 
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0), 
+                      child: Text(
+                        mission.missionName,
+                        textAlign: TextAlign.center, 
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0), 
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'ID Mission: ',
+                              style: TextStyle(
+                                color: Colors.red, 
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextSpan(
+                              text: mission.missionId,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0), 
+                      child: Text(
+                        mission.description,
+                        textAlign: TextAlign.center, 
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           } else {
